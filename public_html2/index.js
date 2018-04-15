@@ -17,9 +17,11 @@
 //     })
 // }
 function decrease(Item) {
+    console.log("[publichtml][index][Decrease]");
     $.post('/ecom/dec', {item:Item}, function()
         {
             console.log("4");
+            console.log(Item);
             refreshTodos2();
         }
     )
@@ -27,7 +29,7 @@ function decrease(Item) {
 }
 function refreshTodos2() {
 
-    console.log("4");
+    console.log("7");
     $.get('/ecom/all2', function (data) {
         let cartTable = $('#cart-table');
         cartTable.empty();
@@ -50,7 +52,7 @@ function refreshTodos2() {
             <td>${todo.item}</td>
             <td>Rs. ${todo.price}</td>
             <td> ${todo.quantity}</td>
-             // <td><button onclick='decrease(${todo.item})'class="fa fa-plus-circle"></button></td>
+            <td><button onclick='decrease(${todo.item})'class="fa fa-plus-circle"></button></td>
         </tr>`)
             );
             ii++;

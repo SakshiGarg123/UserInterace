@@ -1,7 +1,7 @@
 /**
  * Created by sakshi on 14/3/17.
  */
-
+var globalui;
 const express = require('express');
 const app = express();
 const db = require('./db');
@@ -33,10 +33,27 @@ app.get('/ecom/all', (req, res) => {
     console.log(result);
     res.send(result)
 });
-
 });
+
+app.get('/ecom/allprice', (req, res) => {
+    //console.log(globalui);
+    db.fetchTasksprice(function (result) {
+        console.log(result);
+        res.send(result)
+    });
+});
+
+// app.get('/ecom/allpopularity', (req, res) => {
+//     db.fetchTaskspopularity(function (result) {
+//         console.log(result);
+//         res.send(result)
+//     });
+// });
+
+
+
 app.get('/ecom/all2', (req, res) => {
-    db.fetchTasks2(function (result) {
+    db.fetchTasks2(globalui,function (result) {
         console.log(result);
         res.send(result)
     });
@@ -44,7 +61,7 @@ app.get('/ecom/all2', (req, res) => {
 });
 app.post('/ecom/inc2', (req, res) => {
     // console.log(req.body.item );
-    db.setinc2(req.body.item,
+    db.setinc2(globalui,req.body.item,
         function(result) {
             res.send(result)
         }
@@ -52,6 +69,7 @@ app.post('/ecom/inc2', (req, res) => {
 });
 
 app.post('/ecom/dec', (req, res) => {
+    console.log("inside dec");
     console.log(req.body.item );
     db.setdec2(req.body.item,
         function(result) {
@@ -63,13 +81,17 @@ app.get('/trycart', function(req, res){
     console.log("redirecting");
     res.redirect('/cart');
 });
+
 app.post('/add', (req, res) => {
 
-    console.log("sakshi");
+    console.log("sakshi in add new task");
     db1.addNewTask(req.body.username,req.body.password, req.body.nature,function (result) {
+        globalui=req.body.username;
         res.send(result);
         console.log("result");
+        console.log(globalui);
     })
+    console.log(globalui);
 });
 
 
@@ -122,7 +144,7 @@ app.get('/login', function(req, res){
     res.redirect('/login1');
 });
 app.use('/', express.static(__dirname + "/start_html"));
-app.use('/cart', express.static(__dirname + "/public_html2"));
+app.use('/cart', express.static(__dirname + "/public_html2"));//ecomall2
 app.use('/catalog', express.static(__dirname + "/public_html"));
 app.use('/pay', express.static(__dirname + "/pay_html"));
 app.listen(2358, () => {console.log('Started on 2358')});

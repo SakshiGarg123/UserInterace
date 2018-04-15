@@ -39,11 +39,37 @@ function fetchTasks(done) {
         }
     );
 }
-function fetchTasks2(done) {
+function fetchTasksprice(done) {
+    let conn = mysql.createConnection(dbconf);
+    conn.connect();
+    conn.query(
+        "SELECT * FROM ecom ORDER by price",
+        function (err, result, fields) {
+            if (err) throw err;
+            done(result);
+            conn.end();
+            console.log("fetchtaskecomdb");
+        }
+    );
+}
+function fetchTaskspopularity(done) {
+    let conn = mysql.createConnection(dbconf);
+    conn.connect();
+    conn.query(
+        "SELECT * FROM ecom",
+        function (err, result, fields) {
+            if (err) throw err;
+            done(result);
+            conn.end();
+            console.log("fetchtaskecomdb");
+        }
+    );
+}
+function fetchTasks2(globalui,done) {
     let conn = mysql.createConnection(dbconf1);
     conn.connect();
     conn.query(
-        "SELECT * FROM eshop",
+        "SELECT * FROM eshop where ?",[ {username: globalui}],
         function (err, result, fields) {
             if (err) throw err;
             done(result);
@@ -53,27 +79,41 @@ function fetchTasks2(done) {
     );
 }
 
-function setinc2(Item, done) {
+function setinc2(globalui,Item, done) {
     console.log(Item)
     let conn = mysql.createConnection(dbconf1);
     conn.connect();
     conn.query(
-        "SELECT * FROM eshop WHERE ?",
-        [ {item: Item}],
+        "SELECT * FROM eshop WHERE ? AND ?",
+        [{item: Item},{username:globalui}],
         function (err, result, fields) {
            // console.log(err);
+            console.log(result)
             if (err) throw err;
             console.log(result)
-            done(result);
+            if(result.length==0)
+            {
+                addNewTask(globalui,Item, 10000,1,function (result) {
+                    console.log("finished");
+                })
+                done(result);
+
+            }
+
             // setdeleteState(Item, function (result) {
             //
             // });
             // addNewTask(Item,result[0].price,result[0].quantity+1, function (result) {
             //     console.log("finished");
             // });
-            setTaskState(Item,result[0].quantity+1, function (result) {
-                console.log("finished");
-            })
+            else
+            {
+                setTaskState(Item,result[0].quantity+1, function (result) {
+                    console.log("finished");
+                })
+                done(result);
+            }
+
             conn.end();
         }
     );
@@ -102,13 +142,13 @@ function setdec2(Item, done) {
     );
 }
 
-function addNewTask (item,p,quantity, done) {
+function addNewTask (globalui,item,p,quantity, done) {
     let conn = mysql.createConnection(dbconf1);
     console.log("insert");
     conn.connect();
     conn.query(
-        "INSERT INTO eshop SET ?",
-        {item: item, price: p,quantity:quantity},
+        "INSERT INTO eshop SET ? ",
+        [{item: item, price: p,quantity:quantity,username:globalui}],
         function (err, result, fields) {
             if (err) throw err;
             done(result);
@@ -148,5 +188,5 @@ function setTaskState(item,quantity, done) {
     );
 }
 module.exports = {
-    fetchTasks, setinc2,fetchTasks2,setdec2
+    fetchTasks, setinc2,fetchTasks2,setdec2,fetchTasksprice
 };

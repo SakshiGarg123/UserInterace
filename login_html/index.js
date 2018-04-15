@@ -19,6 +19,12 @@ $(function () {
 
     $('#login').click(function () {
         console.log("hee");
+        $.post('/add', {username: $('#ui').val(), password: $('#p').val(),nature:"student"}, function()
+            {
+                console.log("3");
+                refreshTodos();
+            }
+        )
         window.location = "http://localhost:2358/catalog"
     });
 

@@ -19,6 +19,42 @@ function refreshTodos() {
         $('#todolist').html(todolist)
     })
 }
+function refreshTodosprice() {
+    $.get('/ecom/allprice', function (data) {
+        let todolist = "";
+
+        for (todo of data) {
+
+            todolist += "<li>";
+            todolist += "<span>" + todo.item + "</span>  ";
+            todolist += "<span>" + todo.price + "</span>";
+            todolist+="<button onclick='increase(`"+todo.item+"`)'>"+ " Add To Cart"+"</button>"
+            console.log(todo.item);
+            // todolist+="<button onclick='decrease(`"+todo.item+"`)'>"+ "Remove From Cart"+"</button>"
+            todolist += "</li>"
+        }
+
+        $('#todolist').html(todolist)
+    })
+}
+function refreshTodospopulairty() {
+    $.get('/ecom/allpopularity', function (data) {
+        let todolist = "";
+
+        for (todo of data) {
+
+            todolist += "<li>";
+            todolist += "<span>" + todo.item + "</span>  ";
+            todolist += "<span>" + todo.price + "</span>";
+            todolist+="<button onclick='increase(`"+todo.item+"`)'>"+ " Add To Cart"+"</button>"
+            console.log(todo.item);
+            // todolist+="<button onclick='decrease(`"+todo.item+"`)'>"+ "Remove From Cart"+"</button>"
+            todolist += "</li>"
+        }
+
+        $('#todolist').html(todolist)
+    })
+}
 // function refreshTodos() {
 //     let catContainer = $('#catalog-container')
 //     catContainer.empty();
@@ -96,5 +132,13 @@ $(function () {
                 console.log("2");
             }
         )
+    });$("#view2").click(function () {
+        refreshTodosprice();
+        console.log("1");
     });
+    $("#view3").click(function () {
+        refreshTodospopularity();
+        console.log("12");
+    });
+
 });

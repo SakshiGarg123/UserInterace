@@ -5,13 +5,20 @@
     <title>Title</title>
 </head>
 <meta name="viewport" content="width=device-width">
+<script src="jquery.js"></script>
+<script src="index.js"></script>
+
 <body>
+<div>
+    <ul id="price">
+    </ul>
+</div>
 <form action="/purchase" method="POST">
     <!-- Note that the amount is in paise = 50 INR -->
     <script
             src="https://checkout.razorpay.com/v1/checkout.js"
             data-key="rzp_test_zcMpXgB9IwLVoB"
-            data-amount="5000"
+            data-amount="25000000"
             data-buttontext="Pay with Razorpay"
             data-name="Merchant Name"
             data-description="Purchase Description"

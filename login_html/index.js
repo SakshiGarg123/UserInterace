@@ -19,13 +19,26 @@ $(function () {
 
     $('#login').click(function () {
         console.log("hee");
-        $.post('/add', {username: $('#ui').val(), password: $('#p').val(),nature:"student"}, function()
+        $.post('/check', {username: $('#ui').val(), password: $('#p').val(),nature:"student"}, function(data)
             {
                 console.log("3");
-                refreshTodos();
+                console.log(data);
+                //refreshTodos();
+                if(data.length==0)
+                {
+                    window.location = "http://localhost:2358/sign1"
+                }
+                else if($('#p').val()!=data[0].password)
+                {
+                    window.alert("wrong password")
+                }
+                else
+                {
+                    window.location = "http://localhost:2358/catalog"
+                }
             }
         )
-        window.location = "http://localhost:2358/catalog"
+
     });
 
 

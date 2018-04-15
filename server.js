@@ -99,6 +99,15 @@ app.post('/add', (req, res) => {
     })
 
 });
+app.post('/check', (req, res) => {
+
+    console.log("inside check");
+    db1.fetchTasks2(req.body.username,function (result) {
+        globalui=req.body.username;
+        res.send(result);
+    })
+
+});
 app.post('/incpoints', (req, res) => {
 
     console.log("sakshi in update new task");

@@ -69,7 +69,7 @@ function fetchTasks2(globalui,done) {
     let conn = mysql.createConnection(dbconf1);
     conn.connect();
     conn.query(
-        "SELECT * FROM eshop where ?",[ {username: globalui}],
+        "SELECT * FROM eshop join ecom where eshop.item=ecom.item and  ?",[ {username: globalui}],
         function (err, result, fields) {
             if (err) throw err;
             done(result);

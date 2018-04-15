@@ -28,13 +28,13 @@ function addNewTask (username,password, done) {
     );
 }
 
-function fetchTasks2(done) {
+function fetchTasks2(globalui,done) {
     let conn = mysql.createConnection(dbconf);
     conn.connect();
-    console.log("sakshi");
+    console.log("fetching password");
 
     conn.query(
-        "SELECT * FROM login",
+        "SELECT password FROM login where ?",{username:globalui},
         function (err, result, fields) {
             if (err) throw err;
             console.log(result);

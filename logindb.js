@@ -14,12 +14,12 @@ let dbconf = {
     database: 'authdb'
 };
 
-function addNewTask (username,password,nature, done) {
+function addNewTask (username,password, done) {
     let conn = mysql.createConnection(dbconf);
     conn.connect();
     conn.query(
         "INSERT INTO  login SET ?",
-        {username: username, password: password,nature:nature},
+        {username: username, password: password,points:0},
         function (err, result, fields) {
            if (err) throw err;
             done(result);
@@ -43,13 +43,28 @@ function fetchTasks2(done) {
         }
     );
 }
+function fetchTaskspoint(globalui,done) {
+    let conn = mysql.createConnection(dbconf);
+    conn.connect();
+    console.log("sakshi");
 
-/*function setTaskState(Item, p, done) {
+    conn.query(
+        "SELECT points FROM login where ?",{username:globalui},
+        function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            done(result);
+            conn.end();
+        }
+        );
+}
+
+function updateTask(globalui, p, done) {
     let conn = mysql.createConnection(dbconf);
     conn.connect();
     conn.query(
-        "UPDATE ecom SET ? WHERE ?",
-        [{price: p}, {item: Item}],
+        "UPDATE login SET ? WHERE ?",
+        [{points: p}, {username: globalui}],
         function (err, result, fields) {
             if (err) throw err;
             done(result);
@@ -57,7 +72,7 @@ function fetchTasks2(done) {
         }
     );
 }
-
+/*
 function setdeleteState(Item, p, done) {
     let conn = mysql.createConnection(dbconf);
     conn.connect();
@@ -73,6 +88,6 @@ function setdeleteState(Item, p, done) {
 }
 */
 module.exports = {
-    addNewTask,fetchTasks2
+    addNewTask,fetchTasks2,fetchTaskspoint,updateTask
    // , setTaskState,setdeleteState,fetchTasks
 };

@@ -45,7 +45,7 @@ function refreshTodos2() {
         </thead>
   `));
         var ii =1;
-        for (todo of data ) {
+        for (todo of data [0]) {
             cartTable.append(
                 $(`<tr>
             <!--<td>'+"ii"+'</td>-->

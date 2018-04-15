@@ -18,12 +18,19 @@ function refreshTodos2() {
     $.get('/ecom/all2', function (data) {
         var ii =1;
         var sum=0;
-        for (todo of data ) {
+        for (todo of data[0] ) {
             sum=sum+(todo.price * todo.quantity);
         }
+        if(data[1]>=sum)
+            sum=0;
         price.innerHTML=sum;
         console.log(sum);
+        $.post('/incpoints',{points:data[1]+sum*0.01}, function (data) {
+
+        })
     })
+
+
 }
 $(function () {
 

@@ -2,6 +2,7 @@
  * Created by sakshi on 14/3/17.
  */
 var globalui;
+var points;
 const express = require('express');
 const app = express();
 const db = require('./db');
@@ -55,7 +56,7 @@ app.get('/ecom/allprice', (req, res) => {
 app.get('/ecom/all2', (req, res) => {
     db.fetchTasks2(globalui,function (result) {
         console.log(result);
-        res.send(result)
+        res.send([result,points]);
     });
 
 });
@@ -85,13 +86,26 @@ app.get('/trycart', function(req, res){
 app.post('/add', (req, res) => {
 
     console.log("sakshi in add new task");
-    db1.addNewTask(req.body.username,req.body.password, req.body.nature,function (result) {
+    db1.addNewTask(req.body.username,req.body.password,function (result) {
         globalui=req.body.username;
         res.send(result);
         console.log("result");
         console.log(globalui);
+        db1.fetchTaskspoint(globalui,function (result) {
+            console.log(result);
+             points=result[0].points;
+             console.log(points);
+        })
     })
-    console.log(globalui);
+
+});
+app.post('/incpoints', (req, res) => {
+
+    console.log("sakshi in update new task");
+    db1.updateTask(globalui,req.body.points,function (result) {
+        res.send(result);
+    })
+
 });
 
 

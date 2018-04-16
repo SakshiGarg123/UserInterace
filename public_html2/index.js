@@ -52,7 +52,7 @@ function refreshTodos2() {
             <td>${todo.item}</td>
             <td>Rs. ${todo.price}</td>
             <td> ${todo.quantity}</td>
-            <td><button onclick='decrease(${todo.item})'class="fa fa-plus-circle"></button></td>
+            <td><button onclick='decrease(todo.item)' class="fa fa-plus-circle"></button></td>
         </tr>`)
             );
             ii++;

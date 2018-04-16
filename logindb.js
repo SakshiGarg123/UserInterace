@@ -9,7 +9,7 @@ const mysql = require('mysql');
 
 let dbconf = {
     host: 'localhost',
-    user: 'newuser',
+    user: 'gargshruti30',
     password: 'Shruti123',
     database: 'authdb'
 };

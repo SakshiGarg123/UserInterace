@@ -11,8 +11,12 @@ Admin db -ecomdb
 User Cart-eshopdb
 
 
+
 Intregate RazorpayApi
 
 Add the credentials in server.js file
 
-To start the script RUN node server.js OPEN localhost:2358/
+
+To start the script RUN node server.js 
+
+OPEN localhost:2358/
